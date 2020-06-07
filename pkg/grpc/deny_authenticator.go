@@ -2,9 +2,10 @@ package grpc
 
 import (
 	"context"
-
+        "fmt"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+        "google.golang.org/grpc/metadata"
 )
 
 type denyAuthenticator struct {
@@ -22,5 +23,11 @@ func NewDenyAuthenticator(message string) Authenticator {
 }
 
 func (a denyAuthenticator) Authenticate(ctx context.Context) error {
-	return a.err
+
+	md, ok := metadata.FromIncomingContext(ctx)
+	//.Get("authorization")
+	fmt.Println(ok)
+	fmt.Println("deny Authenticate",ctx,md)
+          //return nil
+	  return a.err
 }

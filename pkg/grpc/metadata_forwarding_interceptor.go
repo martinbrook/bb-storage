@@ -2,13 +2,16 @@ package grpc
 
 import (
 	"context"
-
+        "fmt"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
 
 func forwardMetadataHeaders(ctx context.Context, headers []string) context.Context {
+	fmt.Println("forwardMetadata",ctx)
+
 	md, ok := metadata.FromIncomingContext(ctx)
+	fmt.Println(md)
 	if !ok {
 		return ctx
 	}

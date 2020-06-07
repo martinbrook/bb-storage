@@ -4,6 +4,7 @@ import (
 	"context"
 	"net"
 	"os"
+	"fmt"
 
 	configuration "github.com/buildbarn/bb-storage/pkg/proto/configuration/grpc"
 	"github.com/buildbarn/bb-storage/pkg/util"

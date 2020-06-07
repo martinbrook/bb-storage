@@ -2,11 +2,14 @@ package grpc
 
 import (
 	"context"
+	"fmt"
 )
 
 type allowAuthenticator struct{}
 
 func (a allowAuthenticator) Authenticate(ctx context.Context) error {
+
+	fmt.Println("allow",ctx)
 	return nil
 }
 
