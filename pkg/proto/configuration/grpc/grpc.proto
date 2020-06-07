@@ -34,6 +34,7 @@ message ClientConfiguration {
   //   client.
   //
   // Header names must be lower case.
+
   repeated string forward_metadata = 4;
 
   message HeaderValues {
@@ -135,6 +136,9 @@ message AuthenticationPolicy {
     // Allow incoming requests in case they present a valid TLS
     // certificate.
     TLSClientCertificateAuthenticationPolicy tls_client_certificate = 4;
+
+    // Allow incomming requests in case they present a valid okta
+    string okta = 5;
   }
 }
 

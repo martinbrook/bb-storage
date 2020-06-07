@@ -11,6 +11,7 @@ go_library(
         "grpc.go",
         "metadata_forwarding_interceptor.go",
         "tls_client_certificate_authenticator.go",
+        "okta_authenticator.go",
     ],
     importpath = "github.com/buildbarn/bb-storage/pkg/grpc",
     visibility = ["//visibility:public"],
@@ -44,6 +45,7 @@ go_test(
         "deny_authenticator_test.go",
         "metadata_forwarding_interceptor_test.go",
         "tls_client_certificate_authenticator_test.go",
+        "okta_authenticator_test.go",
     ],
     embed = [":go_default_library"],
     deps = [

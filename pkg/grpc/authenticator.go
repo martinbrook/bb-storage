@@ -48,6 +48,9 @@ func NewAuthenticatorFromConfiguration(policy *configuration.AuthenticationPolic
 		return NewTLSClientCertificateAuthenticator(
 			clientCAs,
 			clock.SystemClock), nil
+	case *configuration.AuthenticationPolicy_Okta:
+		return NewOktaAuthenticator(policyKind.Okta), nil
+
 	default:
 		return nil, status.Error(codes.InvalidArgument, "Configuration did not contain an authentication policy type")
 	}
