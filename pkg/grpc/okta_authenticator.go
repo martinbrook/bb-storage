@@ -2,10 +2,14 @@ package grpc
 
 import (
 	"context"
-        "fmt"
+	"fmt"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/grpc-ecosystem/go-grpc-middleware/auth"
+
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
-        "google.golang.org/grpc/metadata"
 )
 
 type oktaAuthenticator struct {
@@ -24,7 +28,23 @@ func (a oktaAuthenticator) Authenticate(ctx context.Context) error {
 	md, ok := metadata.FromIncomingContext(ctx)
 	//.Get("authorization")
 	fmt.Println(ok)
-	fmt.Println("okta Authenticate",ctx,md)
-          //return nil
-	  return a.err
+	fmt.Println("md = ", md.Get("Authorization"))
+	//return nil
+
+	rawToken, err := grpc_auth.AuthFromMD(ctx, "bearer")
+	if err != nil {
+		return a.err
+	}
+	claims := &jwt.StandardClaims{}
+	token, err := jwt.ParseWithClaims(rawToken, claims, func(token *jwt.Token) (interface{}, error) {
+		return []byte("#secret#"), nil
+	})
+	if err != nil {
+		return a.err
+	}
+	if !token.Valid {
+	   return a.err
+	} else {
+	  return nil
+	}
 }
